@@ -8,8 +8,11 @@ public class timer : MonoBehaviour
 {
     public Text timerText;
     public GameObject timerZakon;
+    public GameObject bg;
     public int timerSeconds;
     public int timerMinuts;
+    bool flag;
+    public int i = 120;
     private game game;
     private phone phone;
     private void Start()
@@ -17,6 +20,7 @@ public class timer : MonoBehaviour
         timerMinuts = 1;
         timerSeconds = 60;
         timerText.text = "2:00";
+        bg.SetActive(false);
     }
     private void Awake()
     {
@@ -32,15 +36,15 @@ public class timer : MonoBehaviour
     }
     IEnumerator TimerforSeconds()
     {
-        for (int i = 0; i < 120; i++)
+        for (; i>0 ; i--)
         {
-            if (game.panelFinelLevelOne.activeSelf == false)
+            if (game.panelFinelLevelOne.activeSelf == false && !game.stopCorout)
             {
                 if (timerSeconds > 10)
                 {
                     timerSeconds--;
                     timerText.text = timerMinuts + ":" + timerSeconds;
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(1f);
                 }
                 else
                 {
@@ -56,12 +60,12 @@ public class timer : MonoBehaviour
                         if (game.panelFinelLevelOne.activeSelf == false)
                         {
                             timerZakon.SetActive(true);
-                            game.backFon.SetActive(true);
+                            bg.SetActive(true);
                             break;
                         }
                         break;
                     }
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(1f);
                 }
             }
             else break;
